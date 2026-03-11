@@ -4,9 +4,7 @@
 
 WARNING: **NE PAS OUBLIER DE MENTIONNER ICI LES NOMS DE TOUS LES MEMBRES DU BINOME. SEULS LES NOMS ICI PRESENTS SERONT NOTÉS. PAS LA PEINE DE ME PRÉVENIR PAR MAIL, JE CONSULTE UNIQUEMENT LES FORKS GITHUB DE MON DEPOT.**
 
-#XXX# (et #YYY#)
-
-Commentaires éventuels des étudiants : #XXXXXX#
+Adrien Burnett et Baptiste Dudonné
 
 ## Pré-requis 
 
@@ -52,9 +50,15 @@ TIP: [Rappel Git] Trois dépôts sont ici utilisés : le dépot Github de l'ense
 
 *Le code est-il structuré en couches ? Quel problèmes ce code peut-il poser ?*
 
+Non, tout est dans un seul package : le contrôleur, l'entité et le repository sont mélangés sans séparation des responsabilités. Cela pose plusieurs problèmes : la logique métier est couplée à la couche HTTP, le code est difficile à tester unitairement, et toute modification d'une partie peut impacter les autres.
+
 *Où se trouve le code métier (voir la règle de gestion RG 1) ?*
 
+La règle de gestion RG1 (affichage de `[LATE!]`) se trouve dans la méthode `finalContent()` du `TodoListController`, ce qui est un anti-pattern : la logique métier devrait résider dans le domaine, pas dans la couche HTTP.
+
 *Cette règle est-elle facilement testable par un test unitaire ?*
+
+Non, car elle est couplée au contrôleur Spring MVC. Pour la tester, il faudrait monter un contexte Spring complet, ce qui alourdit les tests. Si elle était dans une classe domaine, un simple test JUnit sans framework suffirait.
 
 * Lancer une base PostgreSQL en Docker dans un terminal (on lance ici la base en mode interactif pour visualiser son activité. Pour la lancer en tâche de fond, remplacer les options `it` par `d` comme 'daemon'):
 ```bash
@@ -62,9 +66,13 @@ docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 ```
 *Expliquer cette ligne de commande (y compris les options utilisées)*
 
+`docker run` : crée et lance un nouveau conteneur. `-it` : mode interactif avec terminal (pour voir les logs en direct). `-e POSTGRES_PASSWORD=password` : définit la variable d'environnement du mot de passe PostgreSQL. `-p 5432:5432` : expose le port 5432 du conteneur sur le port 5432 de la machine hôte. `postgres` : l'image Docker officielle PostgreSQL à utiliser.
+
 * Compléter le code manquant dans la méthode `TodoListController.createTodoItem()`
 
 *Pourquoi `todoItemRepository` est-il `null` ? Quelle est la meilleure façon de l'injecter ?*
+
+Spring instanciait le contrôleur via le constructeur sans argument, donc l'injection ne se faisait jamais et `todoItemRepository` restait `null`. La meilleure solution est l'injection par constructeur avec `@Inject` (standard JSR-330, framework-agnostique) en supprimant le constructeur vide, ce qui garantit que la dépendance est toujours fournie à l'instanciation.
 
 * Modifier le code en conséquence.
 
