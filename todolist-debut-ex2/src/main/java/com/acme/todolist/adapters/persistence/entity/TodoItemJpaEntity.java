@@ -1,4 +1,4 @@
-package com.acme.todolist.adapters.persistence;
+package com.acme.todolist.adapters.persistence.entity;
 
 import java.time.Instant;
 

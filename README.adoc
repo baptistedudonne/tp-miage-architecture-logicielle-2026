@@ -129,7 +129,10 @@ _Temps estimé : 20 mins_
 
 * Implémenter (en junit) des TU portant sur la règle de gestion qui consiste à afficher `[LATE!]` dans la description d'un item en retard de plus de 24h.
 
-*Quels famille de tests devra-t-on écrire pour les adaptateurs ?* 
+*Quels famille de tests devra-t-on écrire pour les adaptateurs ?*
+
+Pour les adapters des tests d'intégration qui consistent à lancer un environnement de test (potentiellement virtuel) sont les plus adaptés.
+Des tests d'isolation (via des mocks) sont possibles mais moins appropriés car ils ne testeront pas le fonctionnement technique des adapters (requête SQL, intégration dans Kafka....)
 
 *S'il vous reste du temps, écrire quelques-uns de ces tests.*
 

@@ -1,5 +1,6 @@
-package com.acme.todolist.adapters.persistence;
+package com.acme.todolist.adapters.persistence.mapper;
 
+import com.acme.todolist.adapters.persistence.entity.TodoItemJpaEntity;
 import org.springframework.stereotype.Component;
 
 import com.acme.todolist.domain.TodoItem;

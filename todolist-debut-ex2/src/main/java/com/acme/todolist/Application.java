@@ -1,9 +1,9 @@
-package com.acme.todolist.application;
+package com.acme.todolist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "com.acme.todolist")
+@SpringBootApplication
 public class Application {
 
     public static void main(String[] args) {

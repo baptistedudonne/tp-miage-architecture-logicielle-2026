@@ -1,15 +1,13 @@
 package com.acme.todolist.adapters.rest_api;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.acme.todolist.application.port.in.AddTodoItem;
 import com.acme.todolist.application.port.in.GetTodoItems;
 import com.acme.todolist.domain.TodoItem;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Le controlleur Spring MVC qui expose les endpoints REST
@@ -20,27 +18,31 @@ import com.acme.todolist.domain.TodoItem;
 @RestController
 public class TodoListController {
 	
-	
-	private GetTodoItems getTodoItemsQuery;
+
+	private final GetTodoItems getTodoItems;
+	private final AddTodoItem addTodoItems;
 	// A compléter
 	
 	
 	@Inject
 	//A compléter
-	public TodoListController(GetTodoItems getTodoItemsQuery ) {
-		this.getTodoItemsQuery = getTodoItemsQuery;
+	public TodoListController(GetTodoItems getTodoItems,
+							  AddTodoItem addTodoItem) {
+		this.getTodoItems = getTodoItems;
+		this.addTodoItems = addTodoItem;
 	}
 	
 	@GetMapping("/todos")
 	public List<TodoItem> getAllTodoItems() {
-		return this.getTodoItemsQuery.getAllTodoItems();
+		return this.getTodoItems.getAllTodoItems();
 	}
 	
 	
 	// Endpoint de type POST vers "/todos"
-	// A compléter
-	public void ajouterItem(@RequestBody TodoItem item) {
-		// A compléter		
+	@PostMapping("/todos")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void addTodoItem(@RequestBody TodoItem item) {
+		this.addTodoItems.addTodoItem(item);
 	}
 	
 	

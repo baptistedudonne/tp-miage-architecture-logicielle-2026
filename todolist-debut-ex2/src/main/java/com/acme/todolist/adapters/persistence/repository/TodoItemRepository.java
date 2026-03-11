@@ -1,8 +1,9 @@
-package com.acme.todolist.adapters.persistence;
+package com.acme.todolist.adapters.persistence.repository;
 
 import java.util.List;
 import java.util.Optional;
 
+import com.acme.todolist.adapters.persistence.entity.TodoItemJpaEntity;
 import org.springframework.data.repository.CrudRepository;;
 
 /**

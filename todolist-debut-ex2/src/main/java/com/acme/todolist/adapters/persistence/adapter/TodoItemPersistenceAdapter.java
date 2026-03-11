@@ -1,15 +1,15 @@
-package com.acme.todolist.adapters.persistence;
+package com.acme.todolist.adapters.persistence.adapter;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Component;
-
+import com.acme.todolist.adapters.persistence.mapper.TodoItemMapper;
+import com.acme.todolist.adapters.persistence.repository.TodoItemRepository;
 import com.acme.todolist.application.port.out.LoadTodoItem;
 import com.acme.todolist.application.port.out.UpdateTodoItem;
 import com.acme.todolist.domain.TodoItem;
+import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Implémentation JPA des port out de persistence
@@ -37,6 +37,8 @@ public class TodoItemPersistenceAdapter implements LoadTodoItem,UpdateTodoItem {
 				.map(todoItemJpaEntory -> mapper.mapToTodoItem(todoItemJpaEntory)).collect(Collectors.toList());
 	}
 
-	// A compléter
-
+	@Override
+	public void storeNewTodoItem(TodoItem item) {
+		this.todoItemRepository.save(mapper.mapToTodoItemJpaEntity(item));
+	}
 }
