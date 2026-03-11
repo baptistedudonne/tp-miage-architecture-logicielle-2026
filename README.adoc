@@ -115,6 +115,11 @@ Source : http://leanpub.com/get-your-hands-dirty-on-clean-architecture[Tom Hombe
 
 *Rappeler en quelques lignes les grands principes de l'architecture hexagonale.*
 
+L'architecture hexagonale place le domaine métier au centre, sans aucune dépendance vers les couches techniques. Les échanges avec l'extérieur (HTTP, base
+de données) passent par des ports (interfaces) implémentés par des adapters. Les ports d'entrée (IN) exposent les use cases, les ports de sortie (OUT)
+abstraient les dépendances externes. Les dépendances pointent toujours vers l'intérieur : adapters → ports → services → domain, ce qui rend le domaine
+testable unitairement sans Spring ni base de données.
+
 Compléter ce code avec une fonctionnalité de création de `TodoItem`  persisté en base et appelé depuis un endpoint REST `POST /todos` qui :
 
 * prend un `TodoItem` au format JSON dans le body (voir exemple de contenu plus haut);
