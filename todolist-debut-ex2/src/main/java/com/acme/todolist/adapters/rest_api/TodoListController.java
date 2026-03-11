@@ -17,15 +17,11 @@ import java.util.List;
  */
 @RestController
 public class TodoListController {
-	
 
 	private final GetTodoItems getTodoItems;
 	private final AddTodoItem addTodoItems;
-	// A compléter
-	
-	
+
 	@Inject
-	//A compléter
 	public TodoListController(GetTodoItems getTodoItems,
 							  AddTodoItem addTodoItem) {
 		this.getTodoItems = getTodoItems;

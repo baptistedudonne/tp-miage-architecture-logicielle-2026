@@ -72,7 +72,7 @@ docker run -it -e POSTGRES_PASSWORD=password -p 5432:5432 postgres
 
 *Pourquoi `todoItemRepository` est-il `null` ? Quelle est la meilleure façon de l'injecter ?*
 
-Spring instanciait le contrôleur via le constructeur sans argument, donc l'injection ne se faisait jamais et `todoItemRepository` restait `null`. La meilleure solution est l'injection par constructeur avec `@Inject` (standard JSR-330, framework-agnostique) en supprimant le constructeur vide, ce qui garantit que la dépendance est toujours fournie à l'instanciation.
+Spring instanciait le contrôleur via le constructeur sans résoudre le todoItemRepository, donc l'injection ne se faisait jamais et `todoItemRepository` restait `null`. La meilleure solution est l'injection par constructeur avec `@Inject` en supprimant le constructeur vide, ce qui garantit que la dépendance est toujours fournie à l'instanciation.
 
 * Modifier le code en conséquence.
 
@@ -117,8 +117,8 @@ Source : http://leanpub.com/get-your-hands-dirty-on-clean-architecture[Tom Hombe
 
 L'architecture hexagonale place le domaine métier au centre, sans aucune dépendance vers les couches techniques. Les échanges avec l'extérieur (HTTP, base
 de données) passent par des ports (interfaces) implémentés par des adapters. Les ports d'entrée (IN) exposent les use cases, les ports de sortie (OUT)
-abstraient les dépendances externes. Les dépendances pointent toujours vers l'intérieur : adapters → ports → services → domain, ce qui rend le domaine
-testable unitairement sans Spring ni base de données.
+abstraient les dépendances externes. Les dépendances pointent toujours vers l'intérieur : adapters => ports => services => domain, ce qui rend le domaine
+testable unitairement sans Spring ni base de données et isole la logique métier des services techniques.
 
 Compléter ce code avec une fonctionnalité de création de `TodoItem`  persisté en base et appelé depuis un endpoint REST `POST /todos` qui :
 
