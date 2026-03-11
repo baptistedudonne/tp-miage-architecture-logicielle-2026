@@ -49,7 +49,7 @@ class TodoListControllerIntegrationTest {
 
         assertEquals(1, storedItems.size());
 
-        TodoItemJpaEntity stored = storedItems.getFirst();
+        TodoItemJpaEntity stored = storedItems.get(0);
 
         assertEquals(requestItem.getId(), stored.getId());
 
